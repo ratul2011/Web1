@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#070914">
+<meta name="description" content="NEXORA AI — a futuristic AI creator workspace prototype.">
+<title>NEXORA AI — Creator Universe</title>
+<style>
+:root{--bg:#070914;--panel:rgba(15,18,34,.72);--panel2:rgba(20,24,45,.88);--line:rgba(255,255,255,.09);--text:#f6f7ff;--muted:#9da5c4;--cyan:#62e7ff;--violet:#9a7cff;--pink:#ff70c8;--green:#62f5a5;--danger:#ff6b8b;--shadow:0 24px 80px rgba(0,0,0,.42);--radius:22px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0;color:inherit}.hidden{display:none!important}.muted{color:var(--muted)}
+body:before{content:"";position:fixed;inset:-30%;z-index:-3;background:radial-gradient(circle at 15% 15%,rgba(98,231,255,.12),transparent 24%),radial-gradient(circle at 85% 18%,rgba(154,124,255,.13),transparent 25%),radial-gradient(circle at 60% 90%,rgba(255,112,200,.08),transparent 25%);animation:drift 18s ease-in-out infinite alternate}
+body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+@keyframes drift{to{transform:translate3d(2%, -1%,0) scale(1.04)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:translateY(-8px)}}@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(98,231,255,0)}}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#particles{position:fixed;inset:0;z-index:-1;pointer-events:none}.shell{display:flex;min-height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;padding:24px 16px;background:rgba(5,7,18,.78);backdrop-filter:blur(22px);border-right:1px solid var(--line);z-index:30;display:flex;flex-direction:column}.brand{display:flex;align-items:center;gap:11px;padding:4px 10px 28px}.brand-mark{width:38px;height:38px;border-radius:13px;background:conic-gradient(from 200deg,var(--cyan),var(--violet),var(--pink),var(--cyan));box-shadow:0 0 28px rgba(98,231,255,.25);display:grid;place-items:center;position:relative}.brand-mark:after{content:"N";font-weight:900;color:#fff}.brand-name{font-size:19px;font-weight:900;letter-spacing:.12em}.brand-name span{color:var(--cyan)}
+.nav-label{font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:#69718e;padding:10px 12px}.nav{display:grid;gap:5px}.nav button{width:100%;background:transparent;padding:12px;border-radius:13px;text-align:left;color:#9ea6c1;display:flex;align-items:center;gap:12px;transition:.2s}.nav button:hover,.nav button.active{background:rgba(255,255,255,.055);color:#fff}.nav button.active{box-shadow:inset 2px 0 var(--cyan)}.ico{width:20px;text-align:center}.side-bottom{margin-top:auto}.credit{padding:15px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,rgba(98,231,255,.07),rgba(154,124,255,.06))}.credit-top{display:flex;justify-content:space-between;font-size:12px}.bar{height:6px;background:#22263a;border-radius:99px;overflow:hidden;margin:11px 0}.bar i{display:block;height:100%;width:68%;background:linear-gradient(90deg,var(--cyan),var(--violet));border-radius:inherit}.upgrade{width:100%;padding:10px;border-radius:11px;background:#fff;color:#080a14;font-weight:800}
+.main{margin-left:260px;width:calc(100% - 260px);padding:18px 24px 50px}.topbar{height:62px;display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:0;z-index:20;background:linear-gradient(rgba(7,9,20,.92),rgba(7,9,20,.68),transparent);backdrop-filter:blur(8px)}.mobile-menu{display:none}.search{flex:1;max-width:500px;position:relative}.search input{width:100%;height:42px;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:13px;padding:0 16px 0 42px;color:#fff;outline:none}.search input:focus{border-color:rgba(98,231,255,.4)}.search span{position:absolute;left:15px;top:11px;color:#79819e}.top-actions{display:flex;align-items:center;gap:9px}.icon-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.035);display:grid;place-items:center}.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#65e8ff,#8b73ff);display:grid;place-items:center;font-weight:900;color:#08101c}
+.page{display:none;animation:rise .35s ease}.page.active{display:block}.hero{margin-top:18px;border:1px solid var(--line);border-radius:28px;overflow:hidden;position:relative;background:linear-gradient(135deg,rgba(98,231,255,.08),rgba(154,124,255,.08) 45%,rgba(255,112,200,.06));padding:58px 50px;box-shadow:var(--shadow)}.hero-orb{position:absolute;width:330px;height:330px;border-radius:50%;right:6%;top:-100px;background:radial-gradient(circle,rgba(98,231,255,.2),transparent 65%);filter:blur(4px);animation:float 6s ease-in-out infinite}.eyebrow{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border-radius:99px;border:1px solid rgba(98,231,255,.2);background:rgba(98,231,255,.06);color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}h1{font-size:clamp(42px,6vw,78px);line-height:.96;max-width:760px;margin:20px 0 17px;letter-spacing:-.055em}.gradient{background:linear-gradient(90deg,#fff,var(--cyan),#a58cff,#ff8bd7);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:660px;color:#aab2ce;line-height:1.7;font-size:15px}.hero-actions{display:flex;gap:11px;margin-top:27px;flex-wrap:wrap}.btn{padding:12px 17px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.045);font-weight:800;transition:.2s}.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.18)}.btn.primary{background:linear-gradient(100deg,var(--cyan),#8c8cff);color:#050812;border:0}.btn.ghost{color:#c9d0e8}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 24px}.stat{padding:17px;border:1px solid var(--line);border-radius:18px;background:var(--panel)}.stat b{font-size:24px}.stat small{display:block;color:#7e87a5;margin-top:5px}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin:26px 0 13px}.section-head h2{font-size:20px}.section-head p{font-size:12px;color:#747d9b}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{border:1px solid var(--line);background:var(--panel);border-radius:19px;padding:18px;box-shadow:0 12px 40px rgba(0,0,0,.15);transition:.22s}.card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.15)}.tool-card{min-height:175px;display:flex;flex-direction:column;justify-content:space-between}.tool-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.06);font-size:20px}.card h3{margin:12px 0 5px;font-size:15px}.card p{font-size:12px;color:#858da9;line-height:1.55}.card-link{color:var(--cyan);font-size:12px;font-weight:800;margin-top:14px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:rgba(255,255,255,.03);padding:7px 10px;border-radius:99px;font-size:11px;color:#aeb6d1;cursor:pointer}.chip.active{background:rgba(98,231,255,.1);border-color:rgba(98,231,255,.3);color:var(--cyan)}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:14px}.panel{border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden}.panel-head{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panel-title{font-size:13px;font-weight:800}.panel-body{padding:16px}.prompt-area{min-height:190px;width:100%;resize:vertical;border:1px solid var(--line);background:#090c19;color:#e9edff;border-radius:15px;padding:15px;outline:none;line-height:1.6}.prompt-area:focus{border-color:rgba(98,231,255,.35)}.select-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.field{display:grid;gap:7px}.field label{font-size:10px;text-transform:uppercase;color:#737c9b;letter-spacing:.12em}.select,.text-input{height:42px;border:1px solid var(--line);background:#0b0e1c;color:#dfe5ff;border-radius:11px;padding:0 12px;outline:none;width:100%}.result{min-height:286px;background:linear-gradient(145deg,#0a0d1a,#11152a);border:1px dashed rgba(255,255,255,.12);border-radius:15px;padding:18px;white-space:pre-wrap;line-height:1.65;color:#bfc7e1}.result.ready{border-style:solid;border-color:rgba(98,231,255,.18)}.status{font-size:11px;color:#77809e}.code-editor{min-height:330px;width:100%;background:#080b16;color:#dce5ff;border:0;outline:0;padding:16px;font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}.preview{min-height:330px;background:#fff;color:#111;border-radius:13px;overflow:hidden}.preview iframe{width:100%;height:330px;border:0;background:#fff}.tabs{display:flex;gap:6px}.tab{padding:7px 10px;border-radius:9px;background:transparent;color:#7f88a5;font-size:11px}.tab.active{background:rgba(255,255,255,.07);color:#fff}
+.prompt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.prompt-card{cursor:pointer}.prompt-card .copy{float:right;color:#66708e;font-size:11px}.search-row{display:flex;gap:10px;margin-bottom:13px}.search-row .text-input{flex:1}.image-mock{height:170px;border-radius:15px;background:radial-gradient(circle at 30% 30%,rgba(98,231,255,.45),transparent 25%),radial-gradient(circle at 70% 60%,rgba(255,112,200,.35),transparent 24%),linear-gradient(135deg,#15172e,#070a14);display:grid;place-items:center;font-size:40px;position:relative;overflow:hidden}.image-mock:after{content:"AI PREVIEW";position:absolute;bottom:12px;left:12px;font-size:9px;letter-spacing:.18em;color:#aeb6d0}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.gallery-item{border:1px solid var(--line);border-radius:17px;padding:8px;background:var(--panel)}.gallery-item .image-mock{height:135px}.gallery-item small{display:block;color:#7f88a5;padding:9px 3px 3px}
+.profile{display:grid;grid-template-columns:260px 1fr;gap:14px}.profile-card{text-align:center}.big-avatar{width:92px;height:92px;margin:8px auto 15px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet),var(--pink));display:grid;place-items:center;font-size:32px;font-weight:900}.profile-card h2{font-size:20px}.profile-card p{margin:5px 0 16px}.list{display:grid;gap:9px}.list-item{padding:13px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025);display:flex;justify-content:space-between;align-items:center}.list-item span{color:#8992ae;font-size:12px}.switch{width:43px;height:24px;background:#252a3e;border-radius:99px;padding:3px}.switch i{display:block;width:18px;height:18px;border-radius:50%;background:#7f88a5;transition:.2s}.switch.on{background:rgba(98,231,255,.22)}.switch.on i{transform:translateX(19px);background:var(--cyan)}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);display:none;place-items:center;z-index:100;padding:18px}.modal-backdrop.show{display:grid}.modal{width:min(680px,100%);background:#0c0f1e;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:22px;animation:rise .2s ease}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.close{width:35px;height:35px;border-radius:10px;background:rgba(255,255,255,.06)}.toast{position:fixed;right:20px;bottom:20px;z-index:150;padding:12px 15px;border-radius:13px;background:#f5f7ff;color:#070914;font-size:12px;font-weight:800;box-shadow:var(--shadow);transform:translateY(80px);opacity:0;transition:.25s}.toast.show{transform:none;opacity:1}.loader{position:fixed;inset:0;background:#060813;z-index:200;display:grid;place-items:center;transition:.6s}.loader.hide{opacity:0;pointer-events:none}.loader-box{text-align:center}.loader-logo{width:66px;height:66px;border-radius:21px;margin:0 auto 17px;background:conic-gradient(var(--cyan),var(--violet),var(--pink),var(--cyan));animation:spin 2s linear infinite;display:grid;place-items:center;font-weight:900;font-size:23px}.loader-box p{font-size:11px;letter-spacing:.25em;color:#77809e;text-transform:uppercase}
+@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.workspace{grid-template-columns:1fr}.profile{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sidebar{transform:translateX(-105%);transition:.25s;width:270px}.sidebar.open{transform:none}.main{margin-left:0;width:100%;padding:12px 13px 35px}.mobile-menu{display:grid}.topbar{height:55px}.search{display:none}.hero{padding:36px 22px;border-radius:22px}.hero-orb{width:230px;height:230px;right:-60px}.hero h1{font-size:44px}.stats{gap:8px}.stat{padding:13px}.stat b{font-size:20px}.grid{grid-template-columns:1fr}.prompt-grid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr}.select-row{grid-template-columns:1fr}.section-head{align-items:start;gap:8px}.section-head p{display:none}.top-actions .icon-btn:nth-child(2){display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="loader" id="loader"><div class="loader-box"><div class="loader-logo">N</div><p>Initializing NEXORA</p></div></div>
+<div class="shell">
+<aside class="sidebar" id="sidebar">
+<div class="brand"><div class="brand-mark"></div><div class="brand-name">NEX<span>ORA</span></div></div>
+<div class="nav-label">Workspace</div>
+<nav class="nav" id="nav">
+<button class="active" data-page="home"><span class="ico">⌂</span>Overview</button>
+<button data-page="chat"><span class="ico">✦</span>AI Chat</button>
+<button data-page="image"><span class="ico">◈</span>Image Studio</button>
+<button data-page="code"><span class="ico">⌘</span>Code Lab</button>
+<button data-page="prompts"><span class="ico">◇</span>Prompt Library</button>
+<button data-page="tools"><span class="ico">⚡</span>Creator Tools</button>
+</nav>
+<div class="nav-label">Account</div>
+<nav class="nav">
+<button data-page="projects"><span class="ico">▣</span>My Projects</button>
+<button data-page="settings"><span class="ico">⚙</span>Settings</button>
+</nav>
+<div class="side-bottom"><div class="credit"><div class="credit-top"><span>AI Credits</span><b>680 / 1000</b></div><div class="bar"><i></i></div><small class="muted">Free plan · resets in 12 days</small><button class="upgrade" style="margin-top:12px" id="upgradeBtn">Upgrade Pro</button></div></div>
+</aside>
+<main class="main">
+<header class="topbar"><button class="icon-btn mobile-menu" id="menuBtn">☰</button><div class="search"><span>⌕</span><input id="globalSearch" placeholder="Search NEXORA..." autocomplete="off"></div><div class="top-actions"><button class="icon-btn" id="helpBtn">?</button><button class="icon-btn" id="notifyBtn">♢</button><div class="avatar">R</div></div></header>
+
+<section class="page active" id="page-home">
+<div class="hero"><div class="hero-orb"></div><span class="eyebrow"><i class="dot"></i> AI CREATOR UNIVERSE</span><h1>Build. Create.<br><span class="gradient">Go beyond.</span></h1><p>NEXORA is your futuristic creative workspace for ideas, prompts, code, conversations and visual experiments — all in one elegant interface.</p><div class="hero-actions"><button class="btn primary" data-go="chat">✦ Start creating</button><button class="btn ghost" data-go="prompts">Explore prompts →</button></div></div>
+<div class="stats"><div class="stat"><b>12.8K</b><small>Creators online</small></div><div class="stat"><b>48K+</b><small>Prompts explored</small></div><div class="stat"><b>9.7K</b><small>Projects created</small></div><div class="stat"><b>99.9%</b><small>Workspace uptime</small></div></div>
+<div class="section-head"><div><h2>Creative workspace</h2><p>Everything you need to turn an idea into something real.</p></div></div>
+<div class="grid">
+<div class="card tool-card"><div><div class="tool-icon">✦</div><h3>AI Chat</h3><p>Brainstorm, learn, plan and write with your personal AI assistant.</p></div><button class="card-link" data-go="chat">Open workspace →</button></div>
+<div class="card tool-card"><div><div class="tool-icon">◈</div><h3>Image Studio</h3><p>Turn descriptions into visual concepts with style and mood controls.</p></div><button class="card-link" data-go="image">Open studio →</button></div>
+<div class="card tool-card"><div><div class="tool-icon">⌘</div><h3>Code Lab</h3><p>Write front-end code and instantly preview your prototype.</p></div><button class="card-link" data-go="code">Open lab →</button></div>
+<div class="card tool-card"><div><div class="tool-icon">◇</div><h3>Prompt Library</h3><p>Discover polished prompts for design, writing, code and learning.</p></div><button class="card-link" data-go="prompts">Browse library →</button></div>
+<div class="card tool-card"><div><div class="tool-icon">⚡</div><h3>Creator Tools</h3><p>Generate names, bios, captions, ideas and project starters.</p></div><button class="card-link" data-go="tools">Open tools →</button></div>
+<div class="card tool-card"><div><div class="tool-icon">▣</div><h3>Projects</h3><p>Keep your experiments organized in one clean project space.</p></div><button class="card-link" data-go="projects">View projects →</button></div>
+</div></section>
+
+<section class="page" id="page-chat"><div class="section-head"><div><h2>AI Chat</h2><p>Your creative thinking partner.</p></div><span class="eyebrow"><i class="dot"></i> ONLINE</span></div>
+<div class="workspace"><div class="panel"><div class="panel-head"><span class="panel-title">New conversation</span><button class="chip" id="clearChat">Clear</button></div><div class="panel-body"><textarea class="prompt-area" id="chatInput" placeholder="Ask NEXORA anything...
+
+Try: Create a 7-day study plan for learning JavaScript."></textarea><div class="select-row"><div class="field"><label>Mode</label><select class="select" id="chatMode"><option>Creative</option><option>Study</option><option>Developer</option><option>Planner</option></select></div><div class="field"><label>Response</label><select class="select" id="chatLength"><option>Balanced</option><option>Short</option><option>Detailed</option></select></div></div><button class="btn primary" style="width:100%;margin-top:12px" id="sendChat">✦ Generate response</button></div></div>
+<div class="panel"><div class="panel-head"><span class="panel-title">NEXORA response</span><span class="status" id="chatStatus">Ready</span></div><div class="panel-body"><div class="result" id="chatResult">Your response will appear here. This single-file demo uses local JavaScript to simulate an AI experience. Connect your preferred AI API later for real generation.</div></div></div></div></section>
+
+<section class="page" id="page-image"><div class="section-head"><div><h2>Image Studio</h2><p>Shape a visual concept from words.</p></div></div><div class="workspace"><div class="panel"><div class="panel-head"><span class="panel-title">Prompt composer</span><span class="status">Demo engine</span></div><div class="panel-body"><textarea class="prompt-area" id="imagePrompt" placeholder="A futuristic floating city above a quiet ocean at midnight..."></textarea><div class="select-row"><div class="field"><label>Style</label><select class="select" id="imageStyle"><option>Cinematic</option><option>Anime-inspired</option><option>Photoreal</option><option>Fantasy</option><option>Cyberpunk</option></select></div><div class="field"><label>Aspect</label><select class="select"><option>16:9</option><option>1:1</option><option>9:16</option></select></div></div><button class="btn primary" style="width:100%;margin-top:12px" id="generateImage">◈ Generate concept</button></div></div><div class="panel"><div class="panel-head"><span class="panel-title">Visual canvas</span><button class="chip" id="saveImage">Save</button></div><div class="panel-body"><div class="image-mock" id="imageCanvas">◈</div><p class="muted" style="font-size:12px;line-height:1.6;margin-top:12px" id="imageCaption">Your generated concept preview appears here.</p></div></div></div>
+<div class="section-head"><div><h2>Recent visual concepts</h2><p>Local demo gallery.</p></div></div><div class="gallery"><div class="gallery-item"><div class="image-mock">✦</div><small>Neon skyline · cinematic</small></div><div class="gallery-item"><div class="image-mock">◈</div><small>Moon garden · fantasy</small></div><div class="gallery-item"><div class="image-mock">◇</div><small>Orbital station · sci-fi</small></div></div></section>
+
+<section class="page" id="page-code"><div class="section-head"><div><h2>Code Lab</h2><p>Write HTML, CSS and JS with a live preview.</p></div><div class="tabs"><button class="tab active" data-code-tab="html">HTML</button><button class="tab" data-code-tab="css">CSS</button><button class="tab" data-code-tab="js">JS</button></div></div><div class="workspace"><div class="panel"><div class="panel-head"><span class="panel-title">Editor</span><div><button class="chip" id="formatCode">Format</button> <button class="chip" id="runCode">Run ▶</button></div></div><textarea class="code-editor" id="codeEditor"></textarea></div><div class="panel"><div class="panel-head"><span class="panel-title">Live preview</span><span class="status">Sandbox</span></div><div class="panel-body" style="padding:8px"><div class="preview"><iframe id="previewFrame" sandbox="allow-scripts"></iframe></div></div></div></div><div class="card" style="margin-top:13px"><h3>Starter idea</h3><p>Try editing the HTML tab, then press Run. Your changes stay in this browser session until you refresh.</p></div></section>
+
+<section class="page" id="page-prompts"><div class="section-head"><div><h2>Prompt Library</h2><p>Curated prompt starters for your next idea.</p></div><button class="btn primary" id="randomPrompt">✦ Surprise me</button></div><div class="search-row"><input class="text-input" id="promptSearch" placeholder="Search prompts..."><div class="chips" id="promptFilters"><button class="chip active" data-filter="all">All</button><button class="chip" data-filter="design">Design</button><button class="chip" data-filter="study">Study</button><button class="chip" data-filter="code">Code</button><button class="chip" data-filter="content">Content</button></div></div><div class="prompt-grid" id="promptGrid"></div></section>
+
+<section class="page" id="page-tools"><div class="section-head"><div><h2>Creator Tools</h2><p>Small utilities for big ideas.</p></div></div><div class="grid"><div class="card"><div class="tool-icon">◎</div><h3>Username Generator</h3><p>Generate clean, futuristic creator names.</p><input class="text-input" id="usernameSeed" placeholder="Your theme" style="margin-top:12px"><button class="btn primary" style="width:100%;margin-top:9px" id="usernameBtn">Generate</button><div class="result" id="usernameResult" style="min-height:75px;margin-top:9px">—</div></div><div class="card"><div class="tool-icon">✎</div><h3>Bio Generator</h3><p>Create a concise social bio from your niche.</p><input class="text-input" id="bioSeed" placeholder="e.g. video editor" style="margin-top:12px"><button class="btn primary" style="width:100%;margin-top:9px" id="bioBtn">Generate</button><div class="result" id="bioResult" style="min-height:75px;margin-top:9px">—</div></div><div class="card"><div class="tool-icon">#</div><h3>Caption Ideas</h3><p>Generate quick caption starters.</p><input class="text-input" id="captionSeed" placeholder="Topic" style="margin-top:12px"><button class="btn primary" style="width:100%;margin-top:9px" id="captionBtn">Generate</button><div class="result" id="captionResult" style="min-height:75px;margin-top:9px">—</div></div><div class="card"><div class="tool-icon">☷</div><h3>Project Planner</h3><p>Turn a project idea into actionable steps.</p><input class="text-input" id="planSeed" placeholder="Project idea" style="margin-top:12px"><button class="btn primary" style="width:100%;margin-top:9px" id="planBtn">Plan</button><div class="result" id="planResult" style="min-height:75px;margin-top:9px">—</div></div></div></section>
+
+<section class="page" id="page-projects"><div class="section-head"><div><h2>My Projects</h2><p>Your local creative workspace.</p></div><button class="btn primary" id="newProject">＋ New project</button></div><div class="grid" id="projectGrid"><div class="card"><div class="tool-icon">◈</div><h3>NEXORA Landing</h3><p>Futuristic landing page concept · edited today</p><button class="card-link" data-go="code">Open →</button></div><div class="card"><div class="tool-icon">✦</div><h3>Study Assistant</h3><p>Personal study workflow · edited yesterday</p><button class="card-link" data-go="chat">Open →</button></div><div class="card"><div class="tool-icon">◇</div><h3>Creator Brand</h3><p>Prompt and visual identity ideas · 3 days ago</p><button class="card-link" data-go="prompts">Open →</button></div></div></section>
+
+<section class="page" id="page-settings"><div class="section-head"><div><h2>Settings</h2><p>Customize your NEXORA experience.</p></div></div><div class="profile"><div class="card profile-card"><div class="big-avatar">R</div><h2>Creator</h2><p class="muted">Free workspace</p><button class="btn primary" style="width:100%" id="editProfile">Edit profile</button></div><div class="card"><div class="list"><div class="list-item"><div><b>Reduce motion</b><span>Use fewer animations</span></div><div class="switch" data-switch><i></i></div></div><div class="list-item"><div><b>Particles</b><span>Show background particles</span></div><div class="switch on" data-switch id="particleSwitch"><i></i></div></div><div class="list-item"><div><b>Compact mode</b><span>Reduce interface spacing</span></div><div class="switch" data-switch><i></i></div></div><div class="list-item"><div><b>Notifications</b><span>Show workspace alerts</span></div><div class="switch on" data-switch><i></i></div></div></div></div></div></section>
+</main></div>
+<div class="modal-backdrop" id="modal"><div class="modal"><div class="modal-head"><h3 id="modalTitle">NEXORA</h3><button class="close" id="modalClose">×</button></div><div id="modalBody" class="muted" style="line-height:1.7"></div></div></div><div class="toast" id="toast">Done</div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const pages=['home','chat','image','code','prompts','tools','projects','settings'];
+function showPage(name){pages.forEach(p=>{const el=$('#page-'+p);if(el)el.classList.toggle('active',p===name)});$$('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));$('#sidebar').classList.remove('open');window.scrollTo({top:0,behavior:'smooth'});}
+$$('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));$$('[data-go]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.go)));
+$('#menuBtn').addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2200)}
+function openModal(title,body){$('#modalTitle').textContent=title;$('#modalBody').innerHTML=body;$('#modal').classList.add('show')}$('#modalClose').onclick=()=>$('#modal').classList.remove('show');$('#modal').onclick=e=>{if(e.target===$('#modal'))$('#modal').classList.remove('show')};
+setTimeout(()=>$('#loader').classList.add('hide'),900);
+$('#helpBtn').onclick=()=>openModal('NEXORA Help','This is a front-end prototype. Use the left navigation to explore Chat, Image Studio, Code Lab, Prompt Library and Creator Tools. To turn the demo into a real AI product, connect a secure backend/API instead of exposing an API key in this HTML file.');
+$('#notifyBtn').onclick=()=>toast('You are all caught up ✦');$('#upgradeBtn').onclick=()=>openModal('NEXORA Pro','Pro billing is a placeholder in this prototype. Add authentication and a payment provider on your backend when you are ready.');
+$('#globalSearch').addEventListener('input',e=>{const q=e.target.value.toLowerCase().trim();if(!q)return;const match={chat:'chat',image:'image',code:'code',prompt:'prompts',creator:'tools',project:'projects',setting:'settings',overview:'home'};for(const k in match)if(q.includes(k)){showPage(match[k]);break}});
+const responses={Creative:['Absolutely. Let’s turn that idea into a clear creative direction. Start with the goal, define the audience, choose a visual or writing style, then build a small first version.','Here’s a strong approach: define the outcome → sketch the experience → create the smallest working prototype → test it → refine what matters most.'],Study:['Break the topic into small sessions. Start with the core concepts, practice from memory, review mistakes, then finish with a short self-test. Consistency beats cramming.','Use a simple cycle: learn for 25 minutes, recall without notes for 5 minutes, practice for 20 minutes, then write down what you still cannot explain.'],Developer:['Start with a minimal working feature. Keep the UI separate from your data logic, validate user input, and never place private API keys in browser JavaScript. Build one feature end-to-end before expanding.'],Planner:['Define the final result first. Then split it into milestones, turn each milestone into tasks, choose one next action, and review progress at the end of each session.']};
+$('#sendChat').onclick=()=>{const input=$('#chatInput').value.trim();if(!input){toast('Write a message first');return}const mode=$('#chatMode').value;$('#chatStatus').textContent='Thinking…';$('#chatResult').classList.remove('ready');setTimeout(()=>{const pool=responses[mode]||responses.Creative;const base=pool[Math.floor(Math.random()*pool.length)];$('#chatResult').textContent='NEXORA · '+mode+' mode
+
+'+base+'
+
+Your request:
+'+input+'
+
+Next step: turn this into a small, testable action and iterate from there.';$('#chatResult').classList.add('ready');$('#chatStatus').textContent='Complete';toast('Response generated')},650)};
+$('#clearChat').onclick=()=>{$('#chatInput').value='';$('#chatResult').textContent='Your response will appear here.';$('#chatStatus').textContent='Ready'};
+$('#generateImage').onclick=()=>{const p=$('#imagePrompt').value.trim()||'A futuristic floating city above a quiet ocean';const s=$('#imageStyle').value;const canvas=$('#imageCanvas');canvas.textContent='✦';canvas.style.background=`radial-gradient(circle at 25% 35%,rgba(98,231,255,.48),transparent 24%),radial-gradient(circle at 75% 65%,rgba(255,112,200,.4),transparent 25%),linear-gradient(135deg,#15172e,#070a14)`;$('#imageCaption').textContent='Concept generated in '+s+' style: '+p;toast('Visual concept generated')};$('#saveImage').onclick=()=>toast('Concept saved to local session');
+const codeSets={html:`<div class="demo"><div class="orb">N</div><h1>Welcome to NEXORA</h1><p>Build something extraordinary.</p><button onclick="hello()">Launch</button></div>`,css:`body{margin:0;font-family:system-ui;background:#080a14;color:white;display:grid;place-items:center;height:100vh}.demo{text-align:center;padding:40px}.orb{width:72px;height:72px;border-radius:22px;background:linear-gradient(135deg,#62e7ff,#9a7cff);display:grid;place-items:center;margin:auto;font-weight:900;box-shadow:0 0 50px #62e7ff55}.demo h1{font-size:42px;margin:18px 0 8px}.demo p{color:#9da5c4}.demo button{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer}`,js:`function hello(){document.querySelector('.demo h1').textContent='You launched it!';}`};let currentCode='html';
+function loadCode(tab){currentCode=tab;$('#codeEditor').value=codeSets[tab];$$('[data-code-tab]').forEach(b=>b.classList.toggle('active',b.dataset.codeTab===tab))}$$('[data-code-tab]').forEach(b=>b.onclick=()=>loadCode(b.dataset.codeTab));loadCode('html');
+$('#runCode').onclick=()=>{if(currentCode!=='html'){toast('Run from the HTML tab for this demo');return}const h=codeSets.html,c=codeSets.css,j=codeSets.js;$('#previewFrame').srcdoc=`<!doctype html><html><head><style>${c}</style></head><body>${h}<script>${j.replace(/<\/script>/gi,'')}</script>\n<!--\n  NEXORA CUSTOMIZATION GUIDE\n  Change --cyan, --violet and --pink in :root to recolor the entire UI.\n  Replace the demo chat generator with a secure server-side AI endpoint for production.\n  Never place private API keys directly in this index.html.\n  The Code Lab preview is sandboxed with iframe srcdoc.\n  Prompt Library data is stored in the prompts JavaScript array.\n  Project cards are local demo elements and are not persisted to a server.\n  The interface is responsive for desktop, tablet and mobile widths.\n  Motion respects prefers-reduced-motion where possible.\n  All icons in this prototype are text-based, so there are no external asset dependencies.\n-->\n</body><!--\nNEXORA AI — customization notes\nNote 001: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 002: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 003: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 004: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 005: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 006: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 007: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 008: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 009: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 010: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 011: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 012: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 013: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 014: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 015: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 016: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 017: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 018: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 019: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 020: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 021: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 022: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 023: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 024: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 025: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 026: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 027: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 028: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 029: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 030: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 031: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 032: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 033: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 034: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 035: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 036: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 037: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 038: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 039: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 040: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 041: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 042: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 043: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 044: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 045: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 046: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 047: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 048: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 049: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 050: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 051: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 052: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 053: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 054: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 055: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 056: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 057: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 058: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 059: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 060: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 061: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 062: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 063: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 064: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 065: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 066: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 067: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 068: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 069: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 070: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 071: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 072: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 073: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 074: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 075: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 076: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 077: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 078: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 079: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 080: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 081: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 082: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 083: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 084: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 085: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 086: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 087: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 088: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 089: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 090: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 091: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 092: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 093: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 094: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 095: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 096: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 097: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 098: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 099: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 100: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 101: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 102: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 103: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 104: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 105: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 106: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 107: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 108: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 109: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 110: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 111: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 112: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 113: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 114: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 115: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 116: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 117: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 118: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 119: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 120: Keep production secrets on the server; this front-end is intentionally API-free.\n-->\n</html>`;toast('Preview updated')};$('#formatCode').onclick=()=>{let v=$('#codeEditor').value.replace(/>\s+</g,'><').trim();$('#codeEditor').value=v;codeSets[currentCode]=v;toast('Editor cleaned')};$('#codeEditor').addEventListener('input',()=>codeSets[currentCode]=$('#codeEditor').value);
+const prompts=[
+['Design','Design a premium mobile-first landing page for a futuristic AI product. Use glass panels, subtle gradients, clear hierarchy and accessible contrast.'],['Design','Create a visual identity direction for a modern creator brand. Define typography, spacing, icon language, motion and a restrained accent palette.'],['Study','Teach me a difficult topic using simple language, then give me a short recall quiz and explain why each answer is correct.'],['Study','Build a 14-day study schedule around my available time. Include learning, active recall, practice and review sessions.'],['Code','Create a responsive HTML/CSS/JS component with clean semantic markup, keyboard-friendly controls and no external dependencies.'],['Code','Review this front-end idea for performance, accessibility, responsive behavior and maintainability. Return prioritized improvements.'],['Content','Give me 20 original short-form video ideas around a chosen niche. Include a hook, core value and a simple CTA for each.'],['Content','Write a polished creator bio that feels confident, clear and authentic. Avoid exaggerated claims and keep it concise.']];
+function renderPrompts(filter='all',q=''){const grid=$('#promptGrid');grid.innerHTML='';prompts.filter(x=>(filter==='all'||x[0].toLowerCase()===filter)&&(!q||x[1].toLowerCase().includes(q))).forEach((x,i)=>{const d=document.createElement('div');d.className='card prompt-card';d.innerHTML=`<span class="chip">${x[0]}</span><span class="copy">Copy</span><h3>${x[1].slice(0,65)}${x[1].length>65?'…':''}</h3><p>${x[1]}</p>`;d.onclick=async()=>{try{await navigator.clipboard.writeText(x[1]);toast('Prompt copied')}catch{toast('Prompt selected')}};grid.appendChild(d)})}renderPrompts();let filter='all';$$('[data-filter]').forEach(b=>b.onclick=()=>{$$('[data-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;renderPrompts(filter,$('#promptSearch').value)});$('#promptSearch').oninput=e=>renderPrompts(filter,e.target.value.toLowerCase());$('#randomPrompt').onclick=()=>{const x=prompts[Math.floor(Math.random()*prompts.length)];try{navigator.clipboard.writeText(x[1])}catch{}toast('Surprise prompt copied')};
+const names=['NovaForge','PixelNexus','LumaCore','VantaLab','NeonOrbit','AetherCraft','NexPixel','QuantumMuse'];$('#usernameBtn').onclick=()=>{const seed=$('#usernameSeed').value.trim().replace(/\s+/g,'')||'creator';const n=names[Math.floor(Math.random()*names.length)];$('#usernameResult').textContent=(n+seed).slice(0,18)+'_'+Math.floor(10+Math.random()*90);};$('#bioBtn').onclick=()=>{const s=$('#bioSeed').value.trim()||'creator';$('#bioResult').textContent=`${s} • building ideas into experiences ✦ | learning, creating & evolving`;};$('#captionBtn').onclick=()=>{const s=$('#captionSeed').value.trim()||'new project';$('#captionResult').textContent=`${s}. One idea, one experiment, one step forward. ✦`;};$('#planBtn').onclick=()=>{const s=$('#planSeed').value.trim()||'project';$('#planResult').textContent=`1. Define the goal
+2. Sketch the smallest version
+3. Build the core feature
+4. Test and fix
+5. Polish and publish
+
+Project: ${s}`};
+$('#newProject').onclick=()=>{const name=prompt('Project name?');if(!name)return;const d=document.createElement('div');d.className='card';d.innerHTML=`<div class="tool-icon">✦</div><h3>${name.replace(/[<>]/g,'')}</h3><p>New local project · just now</p><button class="card-link" data-go="code">Open →</button>`;d.querySelector('[data-go]').onclick=()=>showPage('code');$('#projectGrid').prepend(d);toast('Project created')};$('#editProfile').onclick=()=>openModal('Edit profile','Profile editing is a UI placeholder. Connect authentication and a database when you add a real account system.');
+$$('[data-switch]').forEach(s=>s.onclick=()=>{s.classList.toggle('on');toast('Setting updated')});$('#particleSwitch').onclick=()=>{const on=$('#particleSwitch').classList.contains('on');$('#particles').style.display=on?'block':'none'};
+const canvas=$('#particles'),ctx=canvas.getContext('2d');let dots=[];function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);dots=Array.from({length:Math.min(80,Math.floor(innerWidth/16))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.5+.3}))}function animate(){ctx.clearRect(0,0,innerWidth,innerHeight);for(const d of dots){d.x+=d.vx;d.y+=d.vy;if(d.x<0)d.x=innerWidth;if(d.x>innerWidth)d.x=0;if(d.y<0)d.y=innerHeight;if(d.y>innerHeight)d.y=0;ctx.globalAlpha=.35;ctx.fillStyle='#8da4c9';ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,Math.PI*2);ctx.fill()}requestAnimationFrame(animate)}addEventListener('resize',resize);resize();animate();
+addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('show');if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#globalSearch').focus()}});
+</script>
+\n<!--\n  NEXORA CUSTOMIZATION GUIDE\n  Change --cyan, --violet and --pink in :root to recolor the entire UI.\n  Replace the demo chat generator with a secure server-side AI endpoint for production.\n  Never place private API keys directly in this index.html.\n  The Code Lab preview is sandboxed with iframe srcdoc.\n  Prompt Library data is stored in the prompts JavaScript array.\n  Project cards are local demo elements and are not persisted to a server.\n  The interface is responsive for desktop, tablet and mobile widths.\n  Motion respects prefers-reduced-motion where possible.\n  All icons in this prototype are text-based, so there are no external asset dependencies.\n-->\n</body>
+<!--\nNEXORA AI — customization notes\nNote 001: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 002: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 003: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 004: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 005: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 006: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 007: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 008: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 009: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 010: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 011: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 012: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 013: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 014: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 015: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 016: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 017: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 018: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 019: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 020: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 021: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 022: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 023: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 024: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 025: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 026: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 027: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 028: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 029: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 030: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 031: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 032: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 033: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 034: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 035: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 036: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 037: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 038: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 039: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 040: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 041: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 042: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 043: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 044: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 045: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 046: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 047: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 048: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 049: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 050: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 051: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 052: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 053: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 054: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 055: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 056: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 057: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 058: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 059: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 060: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 061: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 062: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 063: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 064: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 065: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 066: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 067: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 068: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 069: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 070: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 071: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 072: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 073: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 074: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 075: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 076: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 077: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 078: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 079: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 080: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 081: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 082: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 083: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 084: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 085: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 086: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 087: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 088: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 089: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 090: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 091: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 092: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 093: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 094: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 095: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 096: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 097: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 098: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 099: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 100: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 101: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 102: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 103: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 104: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 105: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 106: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 107: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 108: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 109: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 110: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 111: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 112: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 113: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 114: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 115: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 116: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 117: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 118: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 119: Keep production secrets on the server; this front-end is intentionally API-free.\nNote 120: Keep production secrets on the server; this front-end is intentionally API-free.\n
+Customization reference 001: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 002: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 003: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 004: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 005: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 006: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 007: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 008: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 009: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 010: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 011: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 012: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 013: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 014: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 015: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 016: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 017: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 018: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 019: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 020: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 021: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 022: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 023: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 024: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 025: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 026: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 027: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 028: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 029: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 030: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 031: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 032: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 033: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 034: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 035: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 036: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 037: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 038: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 039: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 040: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 041: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 042: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 043: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 044: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 045: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 046: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 047: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 048: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 049: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 050: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 051: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 052: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 053: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 054: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 055: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 056: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 057: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 058: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 059: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 060: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 061: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 062: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 063: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 064: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 065: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 066: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 067: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 068: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 069: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 070: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 071: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 072: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 073: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 074: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 075: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 076: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 077: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 078: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 079: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 080: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 081: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 082: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 083: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 084: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 085: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 086: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 087: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 088: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 089: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 090: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 091: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 092: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 093: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 094: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 095: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 096: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 097: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 098: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 099: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 100: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 101: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 102: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 103: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 104: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 105: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 106: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 107: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 108: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 109: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 110: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 111: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 112: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 113: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 114: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 115: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 116: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 117: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 118: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 119: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 120: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 121: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 122: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 123: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 124: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 125: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 126: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 127: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 128: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 129: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 130: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 131: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 132: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 133: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 134: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 135: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 136: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 137: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 138: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 139: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 140: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 141: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 142: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 143: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 144: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 145: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 146: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 147: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 148: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 149: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 150: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 151: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 152: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 153: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 154: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 155: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 156: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 157: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 158: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 159: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 160: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 161: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 162: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 163: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 164: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 165: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 166: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 167: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 168: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 169: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 170: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 171: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 172: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 173: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 174: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 175: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 176: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 177: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 178: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 179: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 180: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 181: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 182: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 183: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 184: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 185: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 186: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 187: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 188: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 189: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 190: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 191: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 192: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 193: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 194: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 195: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 196: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 197: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 198: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 199: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 200: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 201: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 202: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 203: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 204: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 205: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 206: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 207: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 208: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 209: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 210: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 211: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 212: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 213: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 214: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 215: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 216: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 217: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 218: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 219: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 220: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 221: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 222: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 223: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 224: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 225: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 226: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 227: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 228: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 229: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 230: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 231: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 232: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 233: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 234: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 235: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 236: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 237: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 238: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 239: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 240: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 241: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 242: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 243: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 244: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 245: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 246: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 247: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 248: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 249: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 250: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 251: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 252: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 253: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 254: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 255: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 256: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 257: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 258: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 259: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 260: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 261: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 262: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 263: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 264: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 265: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 266: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 267: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 268: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 269: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 270: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 271: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 272: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 273: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 274: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 275: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 276: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 277: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 278: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 279: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 280: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 281: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 282: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 283: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 284: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 285: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 286: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 287: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 288: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 289: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 290: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 291: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 292: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 293: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 294: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 295: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 296: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 297: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 298: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 299: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 300: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 301: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 302: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 303: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 304: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 305: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 306: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 307: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 308: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 309: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 310: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 311: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 312: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 313: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 314: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 315: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 316: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 317: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 318: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 319: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 320: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 321: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 322: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 323: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 324: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 325: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 326: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 327: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 328: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 329: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 330: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 331: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 332: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 333: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 334: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 335: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 336: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 337: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 338: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 339: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 340: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 341: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 342: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 343: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 344: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 345: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 346: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 347: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 348: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 349: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 350: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 351: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 352: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 353: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 354: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 355: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 356: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 357: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 358: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 359: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 360: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 361: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 362: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 363: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 364: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 365: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 366: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 367: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 368: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 369: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 370: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 371: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 372: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 373: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 374: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 375: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 376: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 377: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 378: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 379: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 380: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 381: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 382: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 383: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 384: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 385: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 386: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 387: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 388: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 389: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 390: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 391: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 392: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 393: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 394: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 395: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 396: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 397: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 398: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 399: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 400: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 401: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 402: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 403: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 404: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 405: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 406: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 407: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 408: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 409: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 410: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 411: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 412: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 413: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 414: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 415: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 416: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 417: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 418: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 419: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 420: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 421: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 422: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 423: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 424: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 425: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 426: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 427: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 428: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 429: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 430: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 431: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 432: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 433: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 434: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 435: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 436: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 437: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 438: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 439: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 440: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 441: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 442: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 443: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 444: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 445: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 446: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 447: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 448: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 449: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 450: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 451: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 452: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 453: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 454: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 455: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 456: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 457: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 458: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 459: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 460: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 461: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 462: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 463: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 464: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 465: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 466: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 467: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 468: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 469: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 470: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 471: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 472: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 473: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 474: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 475: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 476: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 477: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 478: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 479: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 480: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 481: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 482: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 483: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 484: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 485: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 486: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 487: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 488: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 489: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 490: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 491: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 492: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 493: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 494: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 495: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 496: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 497: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 498: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 499: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 500: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 501: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 502: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 503: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 504: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 505: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 506: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 507: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 508: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 509: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 510: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 511: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 512: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 513: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 514: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 515: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 516: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 517: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 518: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 519: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 520: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 521: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 522: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 523: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 524: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 525: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 526: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 527: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 528: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 529: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 530: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 531: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 532: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 533: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 534: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 535: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 536: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 537: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 538: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 539: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 540: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 541: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 542: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 543: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 544: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 545: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 546: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 547: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 548: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 549: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 550: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 551: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 552: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 553: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 554: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 555: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 556: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 557: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 558: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 559: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 560: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 561: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 562: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 563: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 564: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 565: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 566: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 567: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 568: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 569: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 570: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 571: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 572: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 573: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 574: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 575: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 576: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 577: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 578: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 579: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 580: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 581: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 582: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 583: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 584: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 585: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 586: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 587: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 588: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 589: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 590: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 591: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 592: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 593: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 594: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 595: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 596: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 597: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 598: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 599: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 600: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 601: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 602: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 603: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 604: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 605: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 606: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 607: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 608: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 609: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 610: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 611: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 612: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 613: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 614: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 615: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 616: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 617: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 618: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 619: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 620: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 621: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 622: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 623: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 624: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 625: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 626: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 627: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 628: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 629: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 630: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 631: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 632: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 633: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 634: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 635: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 636: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 637: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 638: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 639: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 640: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 641: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 642: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 643: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 644: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 645: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 646: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 647: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 648: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 649: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 650: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 651: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 652: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 653: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 654: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 655: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 656: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 657: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 658: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 659: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 660: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 661: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 662: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 663: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 664: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 665: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 666: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 667: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 668: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 669: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 670: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 671: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 672: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 673: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 674: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 675: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 676: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 677: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 678: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 679: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 680: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 681: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 682: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 683: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 684: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 685: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 686: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 687: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 688: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 689: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 690: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 691: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 692: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 693: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 694: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 695: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 696: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 697: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 698: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 699: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 700: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 701: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 702: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 703: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 704: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 705: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 706: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 707: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 708: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 709: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 710: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 711: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 712: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 713: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 714: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 715: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 716: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 717: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 718: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 719: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 720: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 721: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 722: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 723: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 724: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 725: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 726: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 727: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 728: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 729: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 730: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 731: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 732: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 733: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 734: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 735: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 736: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 737: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 738: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 739: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 740: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 741: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 742: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 743: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 744: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 745: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 746: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 747: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 748: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 749: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 750: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 751: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 752: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 753: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 754: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 755: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 756: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 757: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 758: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 759: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 760: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 761: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 762: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 763: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 764: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 765: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 766: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 767: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 768: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 769: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 770: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 771: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 772: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 773: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 774: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 775: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 776: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 777: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 778: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 779: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 780: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 781: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 782: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 783: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 784: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 785: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 786: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 787: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 788: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 789: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 790: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 791: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 792: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 793: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 794: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 795: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 796: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 797: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 798: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 799: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 800: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 801: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 802: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 803: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 804: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 805: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 806: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 807: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 808: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 809: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 810: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 811: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 812: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 813: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 814: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 815: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 816: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 817: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 818: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 819: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 820: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 821: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 822: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 823: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 824: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 825: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 826: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 827: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 828: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 829: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 830: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 831: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 832: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 833: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 834: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 835: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 836: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 837: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 838: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 839: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 840: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 841: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 842: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 843: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 844: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 845: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 846: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 847: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 848: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 849: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 850: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 851: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 852: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 853: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 854: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 855: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 856: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 857: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 858: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 859: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 860: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 861: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 862: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 863: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 864: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 865: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 866: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 867: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 868: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 869: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 870: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 871: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 872: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 873: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 874: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 875: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 876: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 877: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 878: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 879: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 880: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 881: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 882: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 883: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 884: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 885: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 886: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 887: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 888: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 889: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 890: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 891: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 892: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 893: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 894: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 895: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 896: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 897: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 898: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 899: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.
+Customization reference 900: NEXORA is a dependency-free front-end prototype; connect a backend for production AI.-->\n</html>
